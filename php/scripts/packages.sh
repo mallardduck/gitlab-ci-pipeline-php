@@ -21,11 +21,14 @@ export DEBIAN_FRONTEND=noninteractive
       apt-transport-https \
       apt-utils \
       ca-certificates \
+      gnupg2 \
+  && wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add - \
+  && echo "deb http://repo.mongodb.org/apt/debian bullseye/mongodb-org/5.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list \
+  && sudo apt-get update \
   && apt-get install -yq \
       build-essential \
       curl \
       git \
-      gnupg2 \
       jq \
       libc-client-dev \
       mariadb-client \
