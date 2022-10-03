@@ -11,7 +11,8 @@ variables:
   NAMESPACE: mallardduck/gitlab-ci-pipeline-php
 
 services:
-  - docker:20.10.16-dind
+  - name: registry.hub.docker.com/library/docker:20.10.16-dind
+    alias: docker
 
 before_script:
   - docker info
