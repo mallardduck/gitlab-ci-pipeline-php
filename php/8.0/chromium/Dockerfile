@@ -1,4 +1,4 @@
-FROM edbizarro/gitlab-ci-pipeline-php:8.0
+FROM mallardduck/gitlab-ci-pipeline-php:8.0
 
 ARG BUILD_DATE
 ARG VCS_REF

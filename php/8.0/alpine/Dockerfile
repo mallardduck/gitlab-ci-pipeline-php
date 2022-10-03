@@ -3,14 +3,14 @@ FROM php:8.0-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 
-LABEL maintainer="Eduardo Bizarro <edbizarro@gmail.com>" \
+LABEL maintainer="Dan Pock <self@danpock.me>" \
   PHP="8.0" \
   NODE="14" \
-  org.label-schema.name="edbizarro/gitlab-ci-pipeline-php" \
+  org.label-schema.name="mallardduck/gitlab-ci-pipeline-php" \
   org.label-schema.description=":coffee: Docker images for build and test PHP applications with Gitlab CI (or any other CI plataform!)" \
   org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.schema-version="1.0" \
-  org.label-schema.vcs-url="https://github.com/edbizarro/gitlab-ci-pipeline-php" \
+  org.label-schema.vcs-url="https://github.com/mallardduck/gitlab-ci-pipeline-php" \
   org.label-schema.vcs-ref=$VCS_REF
 
 # Set correct environment variables
