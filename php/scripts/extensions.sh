@@ -68,7 +68,6 @@ export runtimeDeps=" \
     libxml2-dev \
     libxslt1-dev \
     libzip-dev \
-    multiarch-support \
     "
 
 
