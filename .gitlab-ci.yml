@@ -13,7 +13,7 @@ variables:
   DOCKER_TLS_CERTDIR: ""
 
 services:
-  - docker:dind
+  - docker:20.10.16-dind
 
 before_script:
   - docker info
