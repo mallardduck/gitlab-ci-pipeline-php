@@ -15,7 +15,6 @@ services:
 
 before_script:
   - docker info
-  - docker login registry.gitlab.lucidinternets.com
 
 Debian 8.0:
   stage: build
