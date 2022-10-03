@@ -31,9 +31,9 @@ COPY ./php/scripts/*.sh /tmp/
 RUN chmod +x /tmp/*.sh
 
 # Install2
-RUN bash ./packages.sh \
-  && bash ./extensions.sh \
-  && bash ./node.sh \
+RUN bash ./packages.sh
+RUN bash ./extensions.sh
+RUN bash ./node.sh \
   && adduser --disabled-password --gecos "" $IMAGE_USER && \
   echo "PATH=$(yarn global bin):$PATH" >> /root/.profile && \
   echo "PATH=$(yarn global bin):$PATH" >> /root/.bashrc && \
