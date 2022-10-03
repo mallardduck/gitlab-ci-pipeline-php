@@ -23,7 +23,7 @@ export DEBIAN_FRONTEND=noninteractive
       ca-certificates \
       gnupg2 \
       wget \
-  && wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | apt-key add - \
+  && wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | | gpg --dearmor | sudo tee /usr/share/keyrings/mongodb-archive-keyring.gpg | gpg --armor \
   && echo "deb http://repo.mongodb.org/apt/debian bullseye/mongodb-org/5.0 main" | tee /etc/apt/sources.list.d/mongodb-org-5.0.list \
   && apt-get update \
   && apt-get install -yq \
@@ -33,7 +33,8 @@ export DEBIAN_FRONTEND=noninteractive
       jq \
       libc-client-dev \
       mariadb-client \
-      mongo-tools \
+      mongodb-org-tools \
+      mongodb-org-shell \
       openssh-client \
       python \
       python-dev \
