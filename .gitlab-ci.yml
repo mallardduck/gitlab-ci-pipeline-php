@@ -33,6 +33,8 @@ Debian 8.0:
     - docker push $NAMESPACE:8
     - docker push $NAMESPACE:latest
   when: always
+  tags:
+    - dind
 
 Alpine 8.0:
   stage: build
@@ -47,6 +49,8 @@ Alpine 8.0:
     - docker push $NAMESPACE:$IMAGE_VERSION
     - docker push $NAMESPACE:alpine
   when: always
+  tags:
+    - dind
 
 Alpine 8.0 LTS:
   stage: build
@@ -61,7 +65,8 @@ Alpine 8.0 LTS:
     - docker push $NAMESPACE:$IMAGE_VERSION
     - docker push $NAMESPACE:alpine-lts
   when: always
-
+  tags:
+    - dind
 
 FPM 8.0:
   stage: build
@@ -76,6 +81,8 @@ FPM 8.0:
     - docker push $NAMESPACE:$IMAGE_VERSION
     - docker push $NAMESPACE:fpm
   when: always
+  tags:
+    - dind
 
 Chromium 8.0:
   stage: build-chromium
@@ -90,3 +97,5 @@ Chromium 8.0:
   when: always
   dependencies:
     - Debian 8.0
+  tags:
+    - dind
