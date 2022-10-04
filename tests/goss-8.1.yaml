@@ -19,7 +19,7 @@ command:
   npm --version:
     exit-status: 0
     stdout:
-      - "6"
+      - "8.19.2"
   sudo npm --version:
     exit-status: 0
   python3 --version:
@@ -32,10 +32,10 @@ command:
     exit-status: 0
   jq --version:
     exit-status: 0
-  php --version:
+  php -v:
     exit-status: 0
     stdout:
-      - 7
+      - "8.1"
   php -m:
     exit-status: 0
     stdout:
@@ -44,7 +44,6 @@ command:
       - bcmath
       - bz2
       - calendar
-      - cassandra
       - exif
       - gd
       - gmp
@@ -55,8 +54,8 @@ command:
       - ldap
       - mbstring
       - memcached
-      - mongodb
       - mysqli
+      - OPcache
       - pcntl
       - pdo_mysql
       - pdo_pgsql
@@ -67,7 +66,6 @@ command:
       - xdebug
       - xml
       - xmlrpc
-      - Zend OPcache
       - zip
       - xsl
 
@@ -75,13 +73,15 @@ file:
   /usr/local/etc/php/conf.d/20-xdebug.ini:
     exists: true
     contains:
-      - xdebug.coverage_enable
+      - xdebug.mode
   /usr/local/etc/php/conf.d/zz-conf.ini:
     exists: true
     contains:
       - memory_limit
   /usr/local/etc/php/conf.d/opcache-recommended.ini:
     exists: true
+    contains:
+      - opcache.enable
   /usr/local/etc/php/conf.d/apcu-recommended.ini:
     exists: true
   /home/php:

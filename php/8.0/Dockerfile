@@ -6,6 +6,7 @@ ARG VCS_REF
 LABEL maintainer="Dan Pock <self@danpock.me>" \
   PHP="8.0" \
   NODE="14" \
+  IMAGE_VERSION=$IMAGE_VERSION \
   org.label-schema.name="mallardduck/gitlab-ci-pipeline-php" \
   org.label-schema.description=":coffee: Docker images for build and test PHP applications with Gitlab CI (or any other CI plataform!)" \
   org.label-schema.build-date=$BUILD_DATE \
@@ -15,6 +16,7 @@ LABEL maintainer="Dan Pock <self@danpock.me>" \
 
 # Set correct environment variables
 ENV IMAGE_USER=php
+ENV IMAGE_VERSION=$IMAGE_VERSION
 ENV HOME=/home/$IMAGE_USER
 ENV COMPOSER_HOME=$HOME/.composer
 ENV PATH=$HOME/.yarn/bin:$PATH
@@ -31,14 +33,14 @@ COPY ./php/scripts/*.sh /tmp/
 RUN chmod +x /tmp/*.sh
 
 # Install2
-RUN bash ./packages.sh
-RUN bash ./extensions.sh
-RUN bash ./node.sh \
-  && adduser --disabled-password --gecos "" $IMAGE_USER && \
-  echo "PATH=$(yarn global bin):$PATH" >> /root/.profile && \
-  echo "PATH=$(yarn global bin):$PATH" >> /root/.bashrc && \
-  echo "$IMAGE_USER  ALL = ( ALL ) NOPASSWD: ALL" >> /etc/sudoers && \
-  mkdir -p /var/www/html \
+RUN bash ./packages.sh \
+  && bash ./extensions.sh \
+  && bash ./node.sh \
+  && adduser --disabled-password --gecos "" $IMAGE_USER \
+  && echo "PATH=$(yarn global bin):$PATH" >> /root/.profile \
+  && echo "PATH=$(yarn global bin):$PATH" >> /root/.bashrc \
+  && echo "$IMAGE_USER  ALL = ( ALL ) NOPASSWD: ALL" >> /etc/sudoers \
+  && mkdir -p /var/www/html \
   && rm -rf ~/.composer/cache/* \
   && chown -R $IMAGE_USER:$IMAGE_USER /var/www $HOME \
   && curl -fsSL https://goss.rocks/install | GOSS_VER=v${GOSS_VERSION} sh \

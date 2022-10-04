@@ -1,10 +1,10 @@
-FROM mallardduck/gitlab-ci-pipeline-php:8.0
+FROM mallardduck/gitlab-ci-pipeline-php:8.1
 
 ARG BUILD_DATE
 ARG VCS_REF
 
 LABEL maintainer="Eduardo Bizarro <edbizarro@gmail.com>" \
-  PHP="8.0" \
+  PHP="8.1" \
   NODE="14" \
   IMAGE_VERSION=$IMAGE_VERSION \
   org.label-schema.name="edbizarro/gitlab-ci-pipeline-php" \
@@ -21,7 +21,7 @@ ENV HOME=/home/$IMAGE_USER
 ENV COMPOSER_HOME=$HOME/.composer
 ENV PATH=$HOME/.yarn/bin:$PATH
 ENV GOSS_VERSION="0.3.16"
-ENV PHP_VERSION=8.0
+ENV PHP_VERSION=8.1
 
 USER root
 

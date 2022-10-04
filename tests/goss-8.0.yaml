@@ -19,7 +19,7 @@ command:
   npm --version:
     exit-status: 0
     stdout:
-      - "6"
+      - "8.19.2"
   sudo npm --version:
     exit-status: 0
   python3 --version:
@@ -44,7 +44,6 @@ command:
       - bcmath
       - bz2
       - calendar
-      - cassandra
       - exif
       - gd
       - gmp
@@ -55,7 +54,6 @@ command:
       - ldap
       - mbstring
       - memcached
-      - mongodb
       - mysqli
       - OPcache
       - pcntl

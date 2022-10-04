@@ -36,34 +36,15 @@ apk --update --no-cache add \
 
 apk --update --no-cache add libzip-dev libsodium-dev
 
-if [[ $PHP_VERSION == "8.0" ]]; then
-  docker-php-ext-configure ldap
-  docker-php-ext-install -j "$(nproc)" ldap
-  PHP_OPENSSL=yes docker-php-ext-configure imap --with-kerberos --with-imap-ssl
-  docker-php-ext-install -j "$(nproc)" imap
-  docker-php-ext-install -j "$(nproc)" exif pcntl bcmath bz2 calendar intl mysqli opcache pdo_mysql pdo_pgsql pgsql soap xsl zip gmp
-  docker-php-source delete
-else
-  docker-php-ext-configure ldap
-  docker-php-ext-install -j "$(nproc)" ldap
-  PHP_OPENSSL=yes docker-php-ext-configure imap --with-kerberos --with-imap-ssl
-  docker-php-ext-install -j "$(nproc)" imap
-  docker-php-ext-install -j "$(nproc)" exif xmlrpc pcntl bcmath bz2 calendar intl mysqli opcache pdo_mysql pdo_pgsql pgsql soap xsl zip gmp
-  docker-php-source delete
-fi
+docker-php-ext-configure ldap
+docker-php-ext-install -j "$(nproc)" ldap
+PHP_OPENSSL=yes docker-php-ext-configure imap --with-kerberos --with-imap-ssl
+docker-php-ext-install -j "$(nproc)" imap
+docker-php-ext-install -j "$(nproc)" exif pcntl bcmath bz2 calendar intl mysqli opcache pdo_mysql pdo_pgsql pgsql soap xsl zip gmp
+docker-php-source delete
 
-if [[ $PHP_VERSION == "8.0" || $PHP_VERSION == "7.4" ]]; then
-  docker-php-ext-configure gd --with-freetype --with-jpeg
-else
-  docker-php-ext-configure gd \
-          --with-gd \
-          --with-freetype-dir=/usr/include \
-          --with-jpeg-dir=/usr/include \
-          --with-png-dir=/usr/include
-fi
-
+docker-php-ext-configure gd --with-freetype --with-jpeg
 docker-php-ext-install -j "$(nproc)" gd
-
 
 git clone --depth 1 -b 3.0.2 "https://github.com/xdebug/xdebug" \
   && cd xdebug \
@@ -101,45 +82,40 @@ docker-php-source extract \
     && apk del .cassandra-deps \
     && docker-php-source delete
 
-if [[ $PHP_VERSION == "8.0" ]]; then
-  #AMQP
-  docker-php-source extract \
-    && mkdir /usr/src/php/ext/amqp \
-    && curl -L https://github.com/php-amqp/php-amqp/archive/master.tar.gz | tar -xzC /usr/src/php/ext/amqp --strip-components=1 \
-    && docker-php-ext-install amqp \
-    && docker-php-source delete
+#AMQP
+docker-php-source extract \
+  && mkdir /usr/src/php/ext/amqp \
+  && curl -L https://github.com/php-amqp/php-amqp/archive/master.tar.gz | tar -xzC /usr/src/php/ext/amqp --strip-components=1 \
+  && docker-php-ext-install amqp \
+  && docker-php-source delete
 
-  #Imagick
-  mkdir /usr/local/src \
-    && cd /usr/local/src \
-    && git clone https://github.com/Imagick/imagick \
-    && cd imagick \
-    && phpize \
-    && ./configure \
-    && make \
-    && make install \
-    && cd .. \
-    && rm -rf imagick \
-    && docker-php-ext-enable imagick
+#Imagick
+mkdir /usr/local/src \
+  && cd /usr/local/src \
+  && git clone https://github.com/Imagick/imagick \
+  && cd imagick \
+  && phpize \
+  && ./configure \
+  && make \
+  && make install \
+  && cd .. \
+  && rm -rf imagick \
+  && docker-php-ext-enable imagick
 
-  #XMLRPC
-  mkdir /usr/local/src/xmlrpc \
-    && cd /usr/local/src/xmlrpc \
-    && curl -L https://pecl.php.net/get/xmlrpc-1.0.0RC1.tgz | tar -xzC /usr/local/src/xmlrpc --strip-components=1 \
-    && phpize \
-    && ./configure \
-    && make \
-    && make install \
-    && cd .. \
-    && rm -rf xmlrpc \
-    && docker-php-ext-enable xmlrpc
+#XMLRPC
+mkdir /usr/local/src/xmlrpc \
+  && cd /usr/local/src/xmlrpc \
+  && curl -L https://pecl.php.net/get/xmlrpc-1.0.0RC3.tgz | tar -xzC /usr/local/src/xmlrpc --strip-components=1 \
+  && phpize \
+  && ./configure \
+  && make \
+  && make install \
+  && cd .. \
+  && rm -rf xmlrpc \
+  && docker-php-ext-enable xmlrpc
 
-    pecl install mongodb \
-      && docker-php-ext-enable mongodb
-else
-  pecl install amqp imagick mongodb \
-    && docker-php-ext-enable amqp imagick mongodb
-fi
+  pecl install mongodb \
+    && docker-php-ext-enable mongodb
 
 git clone "https://github.com/php-memcached-dev/php-memcached.git" \
     && cd php-memcached \
@@ -175,9 +151,5 @@ git clone "https://github.com/php-memcached-dev/php-memcached.git" \
 
 echo "memory_limit=1G" > /usr/local/etc/php/conf.d/zz-conf.ini
 
-if [[ $PHP_VERSION == "8.0" ]]; then
-  # https://xdebug.org/docs/upgrade_guide#changed-xdebug.coverage_enable
-  echo 'xdebug.mode=coverage' > /usr/local/etc/php/conf.d/20-xdebug.ini
-else
-  echo 'xdebug.coverage_enable=1' > /usr/local/etc/php/conf.d/20-xdebug.ini
-fi
+# https://xdebug.org/docs/upgrade_guide#changed-xdebug.coverage_enable
+echo 'xdebug.mode=coverage' > /usr/local/etc/php/conf.d/20-xdebug.ini

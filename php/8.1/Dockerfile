@@ -1,4 +1,4 @@
-FROM php:8.0-fpm
+FROM php:8.1
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -21,7 +21,7 @@ ENV HOME=/home/$IMAGE_USER
 ENV COMPOSER_HOME=$HOME/.composer
 ENV PATH=$HOME/.yarn/bin:$PATH
 ENV GOSS_VERSION="0.3.16"
-ENV PHP_VERSION=8.0
+ENV PHP_VERSION=8.1
 
 USER root
 
@@ -32,7 +32,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY ./php/scripts/*.sh /tmp/
 RUN chmod +x /tmp/*.sh
 
-# Install
+# Install2
 RUN bash ./packages.sh \
   && bash ./extensions.sh \
   && bash ./node.sh \
