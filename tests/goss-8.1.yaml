@@ -58,6 +58,7 @@ command:
       - OPcache
       - pcntl
       - pdo_mysql
+      - mongodb
       - pdo_pgsql
       - pgsql
       - redis
