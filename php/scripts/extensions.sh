@@ -10,6 +10,7 @@ export extensions=" \
     gmp \
     intl \
     mysqli \
+    mongodb \
     opcache \
     pcntl \
     pdo_mysql \
